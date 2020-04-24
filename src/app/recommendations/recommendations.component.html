@@ -1,0 +1,45 @@
+
+
+<ng-container *ngTemplateOutlet="productList.length>0 ? content : loading"></ng-container>
+
+<ng-template #content class="thumbnail">
+    <h4>You might like to purchase these again!!</h4>
+    <div class = "row" *ngFor = "let product of productList; let i = index">
+            <span class="thumbnail text-center" [style.cursor]="'pointer'" (click)="viewProduct(product.id)">
+            <div>
+                <img src ='{{"assets/images/"+product.category+".jpg"}}' [title]='product.displayName'
+                                [style.width.px]='imageWidth' [style.height.px]='imageHeight' [style.margin.px]='imageMargin'>
+            </div>
+            <div class="caption">
+                <div>
+                    <a [routerLink]="['/viewProduct',product.id]" >
+                        {{product.displayName}} </a>
+                </div>
+                <h4 class = "text-success">{{ product.offerPrice | currency:'INR':'symbol':'1.2-2'}}</h4>
+                <h6><s>{{ product.price | currency:'INR':'symbol':'1.2-2'}}</s> Save {{product.price - product.offerPrice | currency:'INR':'symbol':'1.2-2'}}</h6>
+                
+                <span *ngFor="let r of [1,2,3,4,5];">
+                    <i class="{{ratingDes(product.avgRating,r)}}"></i>
+                  </span>
+            </div>
+        </span>
+        </div>
+    </ng-template>
+    <ng-template #loading class = "text-center">
+        <div *ngIf = "!errorMessage">loading data...</div>
+        <div class = "text-center " *ngIf = "errorMessage">
+            <h2>A</h2>
+            <h2>D</h2>
+            <h2>V</h2>
+            <h2>E</h2>
+            <h2>R</h2>
+            <h2>T</h2>
+            <h2>I</h2>
+            <h2>S</h2>
+            <h2>E</h2>
+            <h2>M</h2>
+            <h2>E</h2>
+            <h2>N</h2>
+            <h2>T</h2>
+        </div>
+     </ng-template>

@@ -1,0 +1,68 @@
+<div class="container container-styles">
+	<div class="col-xs-7 col-xs-offset-3">
+		<div class="panel panel-primary">
+			<div class="panel-heading">Sign Up</div>
+			<div class="panel-body padding">
+				<form class="form-horizontal" [formGroup]="signUpForm">
+					<div class="form-group">
+						<label class="col-xs-4 control-label" style="text-align:left">User Name</label>
+						<div class="col-xs-8">
+							<input type="text" class="form-control" formControlName="name">
+							<p *ngIf="signUpForm.controls.name.value && signUpForm.controls.name.errors?.invalidName" class="text-danger">{{signUpForm.controls.name.errors?.invalidName.message}}</p>
+                            <p *ngIf="signUpForm.controls.name.dirty && !signUpForm.controls.name.value" class="text-danger">This field is required!</p>
+                        </div>
+					</div>
+					<div class="form-group">
+						<label class="col-xs-4 control-label" style="text-align:left">Email</label>
+						<div class="col-xs-8">
+                            <input type="email" class="form-control" formControlName="email">
+                            <p *ngIf="signUpForm.controls.email.dirty && !signUpForm.controls.email.value" class="text-danger">This field is required!</p>
+                            <p *ngIf="signUpForm.controls.email.value && signUpForm.controls.email.errors?.emailInvalid" class="text-danger">{{signUpForm.controls.email.errors?.emailInvalid.message}}</p>
+                        </div>
+                        
+                    </div>
+                    <div class="form-group">
+						<label class="col-xs-4 control-label" style="text-align:left">Password</label>
+						<div class="col-xs-8">
+                            <input type="password" class="form-control" formControlName="password">
+                            <p *ngIf="signUpForm.controls.password.dirty && !signUpForm.controls.password.value" class="text-danger">This field is required!</p>
+                            <p *ngIf="signUpForm.controls.password.value && signUpForm.controls.password.errors?.invalidPassword" class="text-danger">{{signUpForm.controls.password.errors?.invalidPassword.message}}</p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+						<label class="col-xs-4 control-label" style="text-align:left">Confirm Password</label>
+						<div class="col-xs-8">
+                            <input type="password" class="form-control" formControlName="confirmPassword">
+                            <p *ngIf="signUpForm.controls.confirmPassword.dirty && !signUpForm.controls.confirmPassword.value" class="text-danger">This field is required!</p>
+                            <p *ngIf="signUpForm.controls.confirmPassword.value && signUpForm.errors && signUpForm.errors.invalidPassword" class="text-danger">{{signUpForm.errors.invalidPassword.message}}</p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+						<label class="col-xs-4 control-label" style="text-align:left">Account Type</label>
+						<div class="col-xs-8">
+                            <select class="form-control" formControlName="accountType">
+                                    <option [selected] = "true" value = "buyer">Buyer
+                                        </option>
+                                </select>
+                                <p *ngIf="signUpForm.controls.accountType.dirty && !signUpForm.controls.accountType.value" class="text-danger">This field is required!</p>
+						</div>
+					</div>
+
+					<div *ngIf="errorMessage" class="text-danger">{{errorMessage}}</div>
+					<div *ngIf="successMessage" class="text-success">{{successMessage}}</div>
+					<br />
+
+					<div class="form-group">
+						<span class="col-xs-4"></span>
+						<div class="col-xs-3">
+							<button (click)="signUp()" class="btn btn-primary" [disabled]="!signUpForm.valid">Sign Up</button>
+						</div>
+						<span class="col-xs-5" style="top:8px">
+							<a [routerLink]='["/welcome"]' style="color:#337ab7;text-decoration: underline;">Cancel</a>
+						</span>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>

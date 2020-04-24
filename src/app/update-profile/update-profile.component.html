@@ -1,0 +1,60 @@
+<div class="container container-styles">
+	<div class="col-xs-4 col-xs-offset-3">
+		<div class="panel panel-primary">
+			<div class="panel-heading">Update Name</div>
+			<div class="panel-body padding">
+				<form class="form-horizontal" [formGroup]="updateNameForm">
+                    <div class="form-group">
+                        <label class="col-xs-4 control-label" style="text-align:left">User Name</label>
+                        <div class="col-xs-8">
+                            <input type="text" class="form-control" formControlName="name">
+                            <p *ngIf="updateNameForm.controls.name.value && updateNameForm.controls.name.errors?.invalidName" class="text-danger">{{updateNameForm.controls.name.errors?.invalidName.message}}</p>
+                            <p *ngIf="updateNameForm.controls.name.dirty && !updateNameForm.controls.name.value" class="text-danger">This field is required!</p>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <span class="col-xs-4"></span>
+                        <div class="col-xs-3">
+                            <button (click)="updateName()" class="btn btn-primary" [disabled]="!updateNameForm.valid">Update</button>
+                        </div>
+                    </div>
+                    <p *ngIf="successMessage && updateNameForm.valid" class = "text-suceess">{{successMessage}}</p>
+                </form>
+			</div>
+        </div>
+        <br>
+        <div class="panel panel-primary">
+			<div class="panel-heading">Update Password</div>
+			<div class="panel-body padding">
+                <form class="form-horizontal" [formGroup]="passwordForm">
+                
+                    <div class="form-group">
+                        <label class="col-xs-4 control-label" style="text-align:left">Password</label>
+                        <div class="col-xs-8">
+                            <input type="password" class="form-control" formControlName="password">
+                            <p *ngIf="passwordForm.controls.password.dirty && !passwordForm.controls.password.value" class="text-danger">This field is required!</p>
+                            <p *ngIf="passwordForm.controls.password.value && passwordForm.controls.password.errors?.invalidPassword" class="text-danger">{{passwordForm.controls.password.errors?.invalidPassword.message}}</p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-xs-4 control-label" style="text-align:left">Confirm Password</label>
+                        <div class="col-xs-8">
+                            <input type="password" class="form-control" formControlName="confirmPassword">
+                            <p *ngIf="passwordForm.controls.confirmPassword.dirty && !passwordForm.controls.confirmPassword.value" class="text-danger">This field is required!</p>
+                            <p *ngIf="passwordForm.controls.confirmPassword.value && passwordForm.errors && passwordForm.errors.invalidPassword" class="text-danger">{{passwordForm.errors.invalidPassword.message}}</p>
+                        </div>
+                    </div>
+                
+                    <div class="form-group">
+                        <span class="col-xs-4"></span>
+                        <div class="col-xs-3">
+                            <button (click)="updatePassword()" class="btn btn-primary" [disabled]="!passwordForm.valid">Update</button>
+                        </div>
+                    </div>
+                    <p *ngIf="successMessage && passwordForm.valid" class = "text-suceess">{{successMessage}}</p>
+                </form>
+			</div>
+		</div>
+	</div>
+</div>

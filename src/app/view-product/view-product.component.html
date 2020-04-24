@@ -1,0 +1,58 @@
+
+
+<div *ngIf="product">
+    <div class="">
+        <div class="col-xs-8 col-xs-offset-2">
+            <div class="panel panel-primary">
+                <div class="panel-heading text-center"><h4>{{product.displayName}}</h4></div>
+                <div class="panel-body padding ">
+                    <div class="thumbnail row">
+                        
+                        <div class = "col-md-4">
+                            <img src ='{{"assets/images/"+product.category+".jpg"}}' [title]='product.displayName'
+                                            [style.width.px]='imageWidth' [style.height.px]='imageHeight' [style.margin.px]='imageMargin'>
+                        </div>
+                        <div class="col-md-7">
+                            <div>
+                                <h4>{{product.shortDesc}}</h4>
+                                <span *ngFor="let r of [1,2,3,4,5];">
+                                    <i class="{{ratingDes(product.avgRating,r)}}"></i>
+                                  </span>
+                            </div>
+                            <h4 class = "text-success">{{ product.offerPrice | currency:'INR':'symbol':'1.2-2'}}</h4>
+                            <h6><s>{{ product.price | currency:'INR':'symbol':'1.2-2'}}</s> Save {{product.price - product.offerPrice | currency:'INR':'symbol':'1.2-2'}} ({{product.discount/100 | percent:'2.0'}})</h6>
+                            <b>Delivery Charge : </b>{{product.deliveryCharge | currency:'INR':'symbol':'1.2-2'}}
+                            <br>
+                            <br>
+                            <b>Specification: </b>
+                            <br>
+                            <p class = "text-justify">{{product.desc}} </p>
+                            <br>
+                            <div class = "col-md-2">
+                            <input class = "form-control" type = "number" min="1" [max] = "maxQty" [(ngModel)] = "quantity"/>
+                            </div>
+                            <button (click)="addToCart(product)"
+											class="btn btn-primary">{{cartBtnName}}</button>
+                        <br>
+                        <br>
+                        <span class = "thumbnail" *ngIf="product.ratings.length>0">
+                        <h4>User Feedbacks:</h4>
+                        <br>
+                            <div *ngFor = "let rating of product.ratings">
+                                <h5><b>{{rating.userName}}</b>&nbsp;
+                                    <span *ngFor="let r of [1,2,3,4,5];">
+                                        <i class="{{ratingDes(rating.ratings,r)}}"></i>
+                                      </span></h5>
+                                  
+                                  <b>Review :</b>    <p class = "text-justify">{{rating.comments}}</p>
+                                  <br>
+                            </div>
+                            </span>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

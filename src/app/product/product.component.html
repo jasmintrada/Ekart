@@ -1,0 +1,66 @@
+<div >
+    <div class = "col-md-2">
+        <app-deals></app-deals>
+    </div>
+    <div class = "col-md-7">
+        <div class="form-group input-group">
+            
+             <input  class="form-control" [(ngModel)]="searchText" name = 'searchText' type="text" 
+             placeholder="Enter Text to Search for the product.">  
+             <span class="input-group-addon"  [style.cursor]="'pointer'" (click)="searchProduct()">
+                <i class="glyphicon glyphicon-search"></i></span>
+        </div>
+        <p *ngIf="errorMessage">{{errorMessage}}</p>
+        <div *ngIf = "productList">
+            <div class = "row text-center" *ngFor = "let product of productList; let i = index" [hidden] = "(i%2)>0">
+                <div class="col-xs-2">
+                </div>
+                <div class="col-xs-4" *ngIf = "product">
+                    <span class="thumbnail text-center" [style.cursor]="'pointer'" (click)="viewProduct(product.id)">
+                    <div>
+                        <img src ='{{"assets/images/"+product.category+".jpg"}}' [title]='product.displayName'
+										[style.width.px]='imageWidth' [style.height.px]='imageHeight' [style.margin.px]='imageMargin'>
+                    </div>
+                    <div class="caption">
+                        <div>
+                            <a [routerLink]="['/viewProduct',product.id]" >
+                                {{product.displayName}} </a>
+                        </div>
+                        <h4 class = "text-success">{{ product.offerPrice | currency:'INR':'symbol':'1.2-2'}}</h4>
+                        <h6><s>{{ product.price | currency:'INR':'symbol':'1.2-2'}}</s> Save {{product.price - product.offerPrice | currency:'INR':'symbol':'1.2-2'}}</h6>
+                        
+                        <span *ngFor="let r of [1,2,3,4,5];">
+                            <i class="{{ratingDes(product.avgRating,r)}}"></i>
+                          </span>
+                    </div>
+                </span>
+                </div>
+                <div class="col-xs-4">
+                    <span *ngIf="productList[i+1]" [style.cursor]="'pointer'" class="thumbnail text-center" (click)="viewProduct(productList[i+1].id)">
+                    <div>
+                        <img src ='{{"assets/images/"+productList[i+1].category+".jpg"}}' [title]='product.displayName'
+										[style.width.px]='imageWidth' [style.height.px]='imageHeight' [style.margin.px]='imageMargin'>
+                    </div>
+                    <div class="caption">
+                        <div>
+                            <a [routerLink]="['/viewProduct',productList[i+1].id]" >
+                                {{productList[i+1].displayName}} </a>
+                        </div>
+                        <h4 class = "text-success">{{ productList[i+1].offerPrice | currency:'INR':'symbol':'1.2-2'}}</h4>
+                        <h6><s>{{ productList[i+1].price | currency:'INR':'symbol':'1.2-2'}}</s> Save {{productList[i+1].price - productList[i+1].offerPrice | currency:'INR':'symbol':'1.2-2'}}</h6>
+                        
+                        <span *ngFor="let r of [1,2,3,4,5];">
+                            <i class="{{ratingDes(productList[i+1].avgRating,r)}}"></i>
+                          </span>
+                    </div>
+                </span>
+                </div>
+               
+               
+            </div>
+        </div>
+    </div>
+    <div class = "col-md-3">
+        <app-recommendations></app-recommendations>
+    </div>
+</div>

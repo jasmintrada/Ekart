@@ -1,0 +1,14 @@
+<p *ngIf = "errorMessage">{{errorMessage}}</p>
+<div *ngIf = "deals?.length>0" class = "text-center">
+    <h3 class = "text-success"> Deals of the Day</h3>
+<div *ngFor="let deal of deals; let i = index">
+            <div class="panel panel-primary text-center">
+                <div class="panel-heading"> Deal {{i+1}}</div>
+                <div class="panel-body padding">
+                    Hurry Up
+                    <h2>{{deal.discount}}%</h2>
+                   <p class = "text-center">discount in {{deal.category}}</p>
+                </div>
+            </div>
+</div>
+</div>

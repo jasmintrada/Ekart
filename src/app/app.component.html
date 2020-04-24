@@ -1,0 +1,37 @@
+
+<nav class ="navbar navbar-default">
+    <div class ="container-fluid">
+        <div class = "navbar-header">
+            <a class="navbar-brand" [routerLink]='["/welcome"]' ><Strong>Ekart</Strong></a>
+            <button type = "button" class="navbar-toggle" data-toggle = "collapse" data-target = "#myNavbar">
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span> 
+            </button>
+          </div>
+          <div id="myNavbar" class = "collapse navbar-collapse">
+            <ul class = "nav navbar-nav" >
+                <li class = "active"><a [routerLink]='["/products"]'>Home</a></li>
+            </ul>
+          
+          
+          <ul class = "nav navbar-nav navbar-right" *ngIf = "loggedIn">
+            <li class="dropdown">
+              <a class="dropdown-toggle" data-toggle="dropdown" href="#">Welcome {{userName}}!<span class="caret"></span></a>
+             <ul class="dropdown-menu">		
+               <li><a [routerLink] = '["/updateProfile"]'>Update Profile</a></li>	
+               <li><a [style.cursor]="'pointer'" (click) = "logout()">Logout</a></li>
+             </ul>
+           </li>
+          </ul>
+            <ul class = "nav navbar-nav navbar-right" *ngIf="!loggedIn">
+              <li><a [routerLink] = '["/login"]'>Log In</a></li>
+              <li><a [routerLink] = '["/signUp"]'>Sign Up</a></li>
+          </ul>
+          <ul class = "nav navbar-nav navbar-right">
+              <li><a [routerLink] = "['/viewCart']" title="view cart"><span class="glyphicon glyphicon-shopping-cart"></span><span class = "badge" id="cartItems">{{cartItems}}</span></a></li>
+            </ul>
+        </div>
+      </div>
+  </nav>
+<router-outlet></router-outlet>
