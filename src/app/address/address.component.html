@@ -5,7 +5,7 @@
 			<div class="panel-body padding">
 				<form class="form-horizontal" [formGroup]="AddressForm">
 					<div class="form-group">
-						<label class="col-xs-4 control-label" style="text-align:left">User Name</label>
+						<label class="col-xs-4 control-label" style="text-align:left">User Name </label>
 						<div class="col-xs-8">
 							<input type="text" class="form-control" formControlName="name">
 							<p *ngIf="signUpForm.controls.name.value && signUpForm.controls.name.errors?.invalidName" class="text-danger">{{signUpForm.controls.name.errors?.invalidName.message}}</p>
