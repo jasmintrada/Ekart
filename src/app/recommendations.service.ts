@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { RestURL } from './RestAPIURL';
 
 @Injectable({
   providedIn: 'root'
@@ -8,7 +9,7 @@ import { Observable } from 'rxjs';
 export class RecommendationsService {
 
 
-  recommendUrl:string = 'http://localhost:5000/orderDetails/purchasedProduct/';
+  recommendUrl:string = RestURL.url +'orderDetails/purchasedProduct/';
 
   constructor(private http:HttpClient) { }
 

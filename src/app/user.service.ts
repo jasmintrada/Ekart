@@ -3,22 +3,20 @@ import { Injectable } from '@angular/core';
 import { HttpClient,HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
-import { catchError, tap } from 'rxjs/operators';
 import {AppComponent} from './app.component';
 import { Router } from '@angular/router';
 import { CartService } from './cart.service';
+import {RestURL} from './RestAPIURL';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
-
-  loginUrl:string="http://localhost:5000/user/login";
-  signUpUrl:string="http://localhost:5000/user/signUp";
-  updateUrl:string="http://localhost:5000/user/update";
+  loginUrl:string= RestURL.url +"user/login";
+  signUpUrl:string= RestURL.url +"user/signUp";
+  updateUrl:string= RestURL.url +"user/update";
 
   constructor(private http:HttpClient, private router:Router,private cartService:CartService) {
-
   }
 
   validateUser(data):Observable<any>{

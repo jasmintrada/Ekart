@@ -2,15 +2,16 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Product } from './Product';
 import { Observable } from 'rxjs';
+import { RestURL } from './RestAPIURL';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProductService {
 
-  allProductsUrl:string="http://localhost:5000/product/getProducts";
-  specificProductUrl:string="http://localhost:5000/product/";
-  productByNameUrl:string="http://localhost:5000/product/name/";
+  allProductsUrl:string= RestURL.url +"product/getProducts";
+  specificProductUrl:string= RestURL.url +"product/";
+  productByNameUrl:string= RestURL.url +"product/name/";
 
 
   constructor(private httpClient:HttpClient) { }

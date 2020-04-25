@@ -4,19 +4,20 @@ import { Observable } from 'rxjs';
 import { Cart } from './Cart';
 import { AppComponent } from './app.component';
 import { Router } from '@angular/router';
+import { RestURL } from './RestAPIURL';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CartService {
 
-  viewCartUrl:string = "http://localhost:5000/cart/getDetails/";
+  viewCartUrl:string = RestURL.url +"cart/getDetails/";
 
-  addCartUrl:string = "http://localhost:5000/cart/addToCart";
+  addCartUrl:string = RestURL.url +"cart/addToCart";
 
-  remoevCartUrl:string = "http://localhost:5000/cart/remove/";
+  remoevCartUrl:string = RestURL.url +"cart/remove/";
 
-  updateCartUrl:string = "http://localhost:5000/cart/updateCart";
+  updateCartUrl:string = RestURL.url +"cart/updateCart";
 
 
   constructor(private http:HttpClient,private router:Router) { }
