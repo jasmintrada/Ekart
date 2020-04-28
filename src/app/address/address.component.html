@@ -1,68 +1,123 @@
-<div class="container container-styles">
-	<div class="col-xs-7 col-xs-offset-3">
-		<div class="panel panel-primary">
-			<div class="panel-heading">Update Address </div>
-			<div class="panel-body padding">
-				<form class="form-horizontal" [formGroup]="AddressForm">
-					<div class="form-group">
-						<label class="col-xs-4 control-label" style="text-align:left">User Name </label>
-						<div class="col-xs-8">
-							<input type="text" class="form-control" formControlName="name">
-							<p *ngIf="signUpForm.controls.name.value && signUpForm.controls.name.errors?.invalidName" class="text-danger">{{signUpForm.controls.name.errors?.invalidName.message}}</p>
-                            <p *ngIf="signUpForm.controls.name.dirty && !signUpForm.controls.name.value" class="text-danger">This field is required!</p>
-                        </div>
-					</div>
-					<div class="form-group">
-						<label class="col-xs-4 control-label" style="text-align:left">Email</label>
-						<div class="col-xs-8">
-                            <input type="email" class="form-control" formControlName="email">
-                            <p *ngIf="signUpForm.controls.email.dirty && !signUpForm.controls.email.value" class="text-danger">This field is required!</p>
-                            <p *ngIf="signUpForm.controls.email.value && signUpForm.controls.email.errors?.emailInvalid" class="text-danger">{{signUpForm.controls.email.errors?.emailInvalid.message}}</p>
-                        </div>
-                        
-                    </div>
-                    <div class="form-group">
-						<label class="col-xs-4 control-label" style="text-align:left">Password</label>
-						<div class="col-xs-8">
-                            <input type="password" class="form-control" formControlName="password">
-                            <p *ngIf="signUpForm.controls.password.dirty && !signUpForm.controls.password.value" class="text-danger">This field is required!</p>
-                            <p *ngIf="signUpForm.controls.password.value && signUpForm.controls.password.errors?.invalidPassword" class="text-danger">{{signUpForm.controls.password.errors?.invalidPassword.message}}</p>
-                        </div>
-                    </div>
-                    <div class="form-group">
-						<label class="col-xs-4 control-label" style="text-align:left">Confirm Password</label>
-						<div class="col-xs-8">
-                            <input type="password" class="form-control" formControlName="confirmPassword">
-                            <p *ngIf="signUpForm.controls.confirmPassword.dirty && !signUpForm.controls.confirmPassword.value" class="text-danger">This field is required!</p>
-                            <p *ngIf="signUpForm.controls.confirmPassword.value && signUpForm.errors && signUpForm.errors.invalidPassword" class="text-danger">{{signUpForm.errors.invalidPassword.message}}</p>
-                        </div>
-                    </div>
-                    <div class="form-group">
-						<label class="col-xs-4 control-label" style="text-align:left">Account Type</label>
-						<div class="col-xs-8">
-                            <select class="form-control" formControlName="accountType">
-                                    <option [selected] = "true" value = "buyer">Buyer
-                                        </option>
-                                </select>
-                                <p *ngIf="signUpForm.controls.accountType.dirty && !signUpForm.controls.accountType.value" class="text-danger">This field is required!</p>
-						</div>
-					</div>
-
-					<div *ngIf="errorMessage" class="text-danger">{{errorMessage}}</div>
-					<div *ngIf="successMessage" class="text-success">{{successMessage}}</div>
-					<br />
-
-					<div class="form-group">
-						<span class="col-xs-4"></span>
-						<div class="col-xs-3">
-							<button (click)="signUp()" class="btn btn-primary" [disabled]="!signUpForm.valid">Sign Up</button>
-						</div>
-						<span class="col-xs-5" style="top:8px">
-							<a [routerLink]='["/welcome"]' style="color:#337ab7;text-decoration: underline;">Cancel</a>
-						</span>
-					</div>
-				</form>
-			</div>
-		</div>
-	</div>
+<div class = "text-center">
+    <h1 >Your Addresses</h1>
 </div>
+<br>
+<div class = "col-xs-8 col-xs-offset-2">
+    <div class = "row" >
+        <div class = "col-xs-4"  >
+            <img class = "img-thumbnail img-responsive" (click)="addAddressPopUp()" [style.cursor]="'pointer'" data-toggle="modal" data-target="#myModal" src = "assets/images/addAddress.png" >
+        </div>
+        <div class = "col-xs-4" *ngFor = "let address of addresses; let i = index">
+            <span class = "thumbnail">
+                <div *ngIf = "i==0" class = "text-center"><strong>Default Address</strong><hr></div>
+                <p class = "address"><strong>{{addresses[i].userName}}</strong><br>
+                {{addresses[i].addressLine1}}
+                {{addresses[i].addressLine2?' '+addresses[i].addressLine2:''}}<br>
+                {{addresses[i].locality}}<br>
+                {{addresses[i].city}}, {{addresses[i].state}} {{addresses[i].pincode}}<br>
+                {{addresses[i].country}}<br>
+                Phone number: {{addresses[i].phoneNo}}</p>
+                <div class = "footer">
+                    <button class ="btn btn-link" (click)="updateAddressPopUp(address)" data-toggle="modal" data-target="#myModal"><span title="Edit" class="glyphicon glyphicon-edit"></span></button>
+                    |
+                    <button class ="btn btn-link"><span title="Remove" class="glyphicon glyphicon-trash"></span></button>
+                    <span *ngIf = "i!=0">
+                        |
+                        <button class ="btn btn-link">Set as default</button>
+                    </span>
+                </div>
+            </span>
+        </div>
+       
+    </div>
+</div>
+  <!-- Modal -->
+  <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">{{FormTitle}} Address</h4>
+        </div>
+        <form class="form-horizontal"  #AddressForm="ngForm">
+            <div class="modal-body">
+                <div class="form-group">
+                    <label class="col-xs-3 col-xs-offset-1 control-label" style="text-align:left">Country</label>
+                    <div class="col-xs-7">
+                        <select [(ngModel)] = "address.country" name = "country" #country = "ngModel" required class = "form-control">
+                            <option [value]="country" *ngFor = "let country of countries; let i = index;">{{country}}</option>
+                        </select>
+                        <p *ngIf="country.dirty&&!country.valid" class="text-danger">This field is required!</p>
+                    </div>
+                </div>
+                    <div class="form-group">
+                        <label class="col-xs-3 col-xs-offset-1 control-label" style="text-align:left">User Name</label>
+                        <div class="col-xs-7">
+                            <input type="text" class="form-control" [(ngModel)]="address.userName" [ngModelOptions]="{ updateOn: 'blur' }" name = "userName" #userName = "ngModel" required>
+                            <p *ngIf="userName.dirty&&!userName.valid" class="text-danger">This field is required!</p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-xs-3 col-xs-offset-1 control-label" style="text-align:left">Address Line 1</label>
+                        <div class="col-xs-7">
+                            <input type="text" class="form-control" [(ngModel)]="address.addressLine1" name = "addressLine1" #addressLine1 = "ngModel" required>
+                            <p *ngIf="addressLine1.dirty&&!addressLine1.valid" class="text-danger">This field is required!</p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-xs-3 col-xs-offset-1 control-label" style="text-align:left">Address Line 2</label>
+                        <div class="col-xs-7">
+                            <input type="text" class="form-control" [(ngModel)]="address.addressLine2" name = "addressLine2" #addressLine2 = "ngModel">
+                            <p *ngIf="addressLine2.dirty&&!addressLine2.valid" class="text-danger">This field is required!</p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-xs-3 col-xs-offset-1 control-label" style="text-align:left">Locality</label>
+                        <div class="col-xs-7">
+                            <input type="text" class="form-control" [(ngModel)]="address.locality" name = "locality" #locality = "ngModel" required>
+                            <p *ngIf="locality.dirty&&!locality.valid" class="text-danger">This field is required!</p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-xs-3 col-xs-offset-1 control-label" style="text-align:left">City</label>
+                        <div class="col-xs-7">
+                            <input type="text" class="form-control" [(ngModel)]="address.city" name = "city" #city = "ngModel" required>
+                            <p *ngIf="city.dirty&&!city.valid" class="text-danger">This field is required!</p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-xs-3 col-xs-offset-1 control-label" style="text-align:left">State</label>
+                        <div class="col-xs-7">
+                            <select [(ngModel)] = "address.state" name = "state" #state = "ngModel" required class = "form-control">
+                                <option [value]="state" *ngFor = "let state of states; let i = index;">{{state}}</option>
+                            </select>
+                            <p *ngIf="state.dirty&&!state.valid" class="text-danger">This field is required!</p>
+                        </div>
+                    </div>
+                  
+                    <div class="form-group">
+                        <label class="col-xs-3 col-xs-offset-1 control-label" style="text-align:left">Pincode</label>
+                        <div class="col-xs-7">
+                            <input type="number" min="100000" max = "999999" class="form-control" [(ngModel)]="address.pincode" name = "pincode" #pincode = "ngModel" required>
+                            <p *ngIf="pincode.dirty&&!pincode.valid" class="text-danger">This field is required!</p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-xs-3 col-xs-offset-1 control-label" style="text-align:left">Phone No</label>
+                        <div class="col-xs-7">
+                            <input type="number" min="1000000000" max = "9999999999" class="form-control" [(ngModel)]="address.phoneNo" name = "phoneNo" #phoneNo = "ngModel" required>
+                            <p *ngIf="phoneNo.dirty&&!phoneNo.valid" class="text-danger">This field is required!</p>
+                        </div>
+                    </div>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-primary" >{{FormTitle}}</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </form>
+      </div>
+      
+    </div>
+  </div>

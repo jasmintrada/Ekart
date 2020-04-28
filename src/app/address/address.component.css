@@ -1,0 +1,23 @@
+input.ng-valid[required]  {
+    border-left: 5px solid #42A948; /* green */
+  }
+  input.ng-dirty.ng-invalid:not(form)  {
+    border-left: 5px solid #a94442; /* red */
+  }
+
+  .thumbnail {
+    position: relative;
+    height: 250px;
+    padding: 10px;
+  }
+  .img-thumbnail{
+    height: 250px;
+  }
+  .address{
+    font-size: 13px;
+  }
+  .footer{
+    position: absolute;
+  bottom: 0;
+  left: 0;
+  }
