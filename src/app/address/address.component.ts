@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Address } from '../Address';
+import { AddressService } from '../address.service';
 
 @Component({
   selector: 'app-address',
@@ -9,32 +10,14 @@ import { Address } from '../Address';
 export class AddressComponent implements OnInit {
 
   FormTitle:string = "Add";
-  address:Address = new Address();
-  states:Array<string>;
-  countries:Array<string>;
+  address:Address;
+  states:Array<string> = [];
+  countries:Array<string>=[];
   addresses:Array<Address>=[];
-  constructor() { 
-    this.states = ['Gujarat','Maharashtra','Rajasthan','Andhra Pradesh','Tamilnadu'];
-    this.countries = ['India'];
-    let address = new Address();
+  errorMessage:string="";
+  constructor(private addressService:AddressService) { 
+    sessionStorage.setItem("userId","1");
     
-    address.userName = "Jasmin Trada";
-    address.addressLine1="A-20, Ila Society, India Colony Road";
-    address.addressLine2 = "";
-    address.city="Ahmedabad";
-    address.state = "Gujarat";
-    address.country = "India";
-    address.pincode = "382350";
-    address.phoneNo = 7698564894;
-    address.locality = "Bapuagar";
-    this.addresses.push(address);
-    this.addresses.push(address);
-    this.addresses.push(address);
-    this.addresses.push(address);
-    this.addresses.push(address);
-    this.addresses.push(address);
-    this.addresses.push(address);
-    this.addresses.push(address);
   }
 
   updateAddressPopUp(address:Address){
@@ -45,10 +28,72 @@ export class AddressComponent implements OnInit {
 
   addAddressPopUp(){
     this.address = new Address();
+    this.getCountries();
     this.FormTitle = "Add";
   }
 
   ngOnInit(): void {
+    this.address = new Address();
+    this.addressService.getAddresses().subscribe(success=>{
+      this.addresses = success;
+    },error=>{
+      this.errorMessage = error.message;
+      this.addresses=[];
+    });
+    this.getCountries();
+  }
+  getCountries(){
+    this.addressService.getCountries().subscribe(success=>{
+      this.countries = success;
+      this.address.country = this.countries[0];
+      this.changeStates();
+    });
+  }
+  updateAddress(){
+    this.addressService.updateAddress(this.address).subscribe(
+        success=>{
+          this.addresses = success;
+        },error=>{
+          this.addresses=[];
+        });
+  }
+  addAddress(){
+    if(this.addresses.length==0){
+      this.address.defaultAddress = true;
+    }else{
+      this.address.defaultAddress = false;
+    }
+    this.address.userId = +sessionStorage.getItem("userId");
+    this.addressService.addAddress(this.address).subscribe(
+        success=>{
+          this.addresses = success;
+        },error=>{
+          this.addresses=[];
+        });
+  }
+  setDefaultAddress(addressId:number){
+    this.addressService.setDefaultAddress(addressId).subscribe(success=>{
+      this.addresses = success;
+    },error=>{
+      this.addresses=[];
+    });
+  }
+
+  deleteAddress(addressId:number){
+    this.addressService.deleteAddress(addressId).subscribe(success=>{
+      this.addresses = success;
+    },error=>{
+      this.addresses=[];
+    });
+  }
+
+  changeStates(){
+    this.addressService.getStates(this.address.country).subscribe(
+      success=>{
+        this.states = success;
+        this.address.state = this.states[0];
+      }
+    );
   }
 
 }

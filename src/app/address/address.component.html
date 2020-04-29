@@ -20,10 +20,10 @@
                 <div class = "footer">
                     <button class ="btn btn-link" (click)="updateAddressPopUp(address)" data-toggle="modal" data-target="#myModal"><span title="Edit" class="glyphicon glyphicon-edit"></span></button>
                     |
-                    <button class ="btn btn-link"><span title="Remove" class="glyphicon glyphicon-trash"></span></button>
+                    <button class ="btn btn-link" (click) = "deleteAddress(address.id)"><span title="Remove" class="glyphicon glyphicon-trash"></span></button>
                     <span *ngIf = "i!=0">
                         |
-                        <button class ="btn btn-link">Set as default</button>
+                        <button class ="btn btn-link" (click) = "setDefaultAddress(address.id)">Set as default</button>
                     </span>
                 </div>
             </span>
@@ -43,23 +43,24 @@
         </div>
         <form class="form-horizontal"  #AddressForm="ngForm">
             <div class="modal-body">
-                <div class="form-group">
+                <div class="form-group required">
                     <label class="col-xs-3 col-xs-offset-1 control-label" style="text-align:left">Country</label>
                     <div class="col-xs-7">
-                        <select [(ngModel)] = "address.country" name = "country" #country = "ngModel" required class = "form-control">
+                        <select [(ngModel)] = "address.country" name = "country" #country = "ngModel" required class = "form-control" (change) = "changeStates()">
                             <option [value]="country" *ngFor = "let country of countries; let i = index;">{{country}}</option>
                         </select>
                         <p *ngIf="country.dirty&&!country.valid" class="text-danger">This field is required!</p>
                     </div>
                 </div>
-                    <div class="form-group">
+                    <div class="form-group required">
                         <label class="col-xs-3 col-xs-offset-1 control-label" style="text-align:left">User Name</label>
                         <div class="col-xs-7">
-                            <input type="text" class="form-control" [(ngModel)]="address.userName" [ngModelOptions]="{ updateOn: 'blur' }" name = "userName" #userName = "ngModel" required>
-                            <p *ngIf="userName.dirty&&!userName.valid" class="text-danger">This field is required!</p>
+                            <input type="text" class="form-control" [(ngModel)]="address.userName" name = "userName" #userName = "ngModel" required validateUserName>
+                            <p *ngIf="userName.dirty&&userName.errors?.required" class="text-danger">This field is required!</p>
+                            <p *ngIf="userName.dirty&&userName.errors?.userInvalid" class="text-danger">{{userName.errors.userInvalid}}</p>
                         </div>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group required">
                         <label class="col-xs-3 col-xs-offset-1 control-label" style="text-align:left">Address Line 1</label>
                         <div class="col-xs-7">
                             <input type="text" class="form-control" [(ngModel)]="address.addressLine1" name = "addressLine1" #addressLine1 = "ngModel" required>
@@ -73,21 +74,21 @@
                             <p *ngIf="addressLine2.dirty&&!addressLine2.valid" class="text-danger">This field is required!</p>
                         </div>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group required">
                         <label class="col-xs-3 col-xs-offset-1 control-label" style="text-align:left">Locality</label>
                         <div class="col-xs-7">
                             <input type="text" class="form-control" [(ngModel)]="address.locality" name = "locality" #locality = "ngModel" required>
                             <p *ngIf="locality.dirty&&!locality.valid" class="text-danger">This field is required!</p>
                         </div>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group required">
                         <label class="col-xs-3 col-xs-offset-1 control-label" style="text-align:left">City</label>
                         <div class="col-xs-7">
                             <input type="text" class="form-control" [(ngModel)]="address.city" name = "city" #city = "ngModel" required>
                             <p *ngIf="city.dirty&&!city.valid" class="text-danger">This field is required!</p>
                         </div>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group required">
                         <label class="col-xs-3 col-xs-offset-1 control-label" style="text-align:left">State</label>
                         <div class="col-xs-7">
                             <select [(ngModel)] = "address.state" name = "state" #state = "ngModel" required class = "form-control">
@@ -97,23 +98,25 @@
                         </div>
                     </div>
                   
-                    <div class="form-group">
+                    <div class="form-group required">
                         <label class="col-xs-3 col-xs-offset-1 control-label" style="text-align:left">Pincode</label>
                         <div class="col-xs-7">
-                            <input type="number" min="100000" max = "999999" class="form-control" [(ngModel)]="address.pincode" name = "pincode" #pincode = "ngModel" required>
-                            <p *ngIf="pincode.dirty&&!pincode.valid" class="text-danger">This field is required!</p>
+                            <input type="number" min="100000" max = "999999" class="form-control" [(ngModel)]="address.pincode" name = "pincode" #pincode = "ngModel" required validatePincode>
+                            <p *ngIf="pincode.dirty&&pincode.errors?.required" class="text-danger">This field is required!</p>
+                            <p *ngIf="pincode.dirty&&pincode.errors?.pincodeInvalid" class="text-danger">{{pincode.errors.pincodeInvalid}}</p>
                         </div>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group required">
                         <label class="col-xs-3 col-xs-offset-1 control-label" style="text-align:left">Phone No</label>
                         <div class="col-xs-7">
-                            <input type="number" min="1000000000" max = "9999999999" class="form-control" [(ngModel)]="address.phoneNo" name = "phoneNo" #phoneNo = "ngModel" required>
-                            <p *ngIf="phoneNo.dirty&&!phoneNo.valid" class="text-danger">This field is required!</p>
+                            <input type="number" min="1000000000" max = "9999999999" class="form-control" [(ngModel)]="address.phoneNo" name = "phoneNo" #phoneNo = "ngModel" required validatePhone>
+                            <p *ngIf="phoneNo.dirty&&phoneNo.errors?.required" class="text-danger">This field is required!</p>
+                            <p *ngIf="phoneNo.dirty&&phoneNo.errors?.phoneInvalid" class="text-danger">{{phoneNo.errors.phoneInvalid}}</p>
                         </div>
                     </div>
             </div>
             <div class="modal-footer">
-                <button type="submit" class="btn btn-primary" >{{FormTitle}}</button>
+                <button type="submit" class="btn btn-primary" (click)="FormTitle=='Add'?addAddress():updateAddress()" data-dismiss="modal" [disabled]="!AddressForm.valid">{{FormTitle}}</button>
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
             </div>
         </form>

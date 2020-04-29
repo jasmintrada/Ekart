@@ -18,6 +18,9 @@ import { RecommendationsComponent } from './recommendations/recommendations.comp
 import { AddressComponent } from './address/address.component';
 import { ViewProductComponent } from './view-product/view-product.component';
 import { CartComponent } from './cart/cart.component';
+import { PhoneValidator } from './address/phoneno.validator';
+import { UserValidator } from './address/username.validator';
+import { PincodeValidator } from './address/pincode.validator';
 @NgModule({
   declarations: [
     AppComponent,
@@ -30,7 +33,10 @@ import { CartComponent } from './cart/cart.component';
     RecommendationsComponent,
     AddressComponent,
     ViewProductComponent,
-    CartComponent
+    CartComponent,
+    PhoneValidator,
+    UserValidator,
+    PincodeValidator
   ],
   imports: [
     BrowserModule,

@@ -10,4 +10,5 @@ export class Address{
     pincode:string;
     phoneNo:number;
     userName:string;
+    defaultAddress:boolean;
 }

@@ -13,6 +13,9 @@ input.ng-valid[required]  {
   .img-thumbnail{
     height: 250px;
   }
+  hr{
+    margin: 10px;
+  }
   .address{
     font-size: 13px;
   }
@@ -21,3 +24,7 @@ input.ng-valid[required]  {
   bottom: 0;
   left: 0;
   }
+  .form-group.required .control-label:after { 
+    content:" *";
+    color:red;
+ }
