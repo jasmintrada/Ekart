@@ -21,6 +21,7 @@ import { CartComponent } from './cart/cart.component';
 import { PhoneValidator } from './address/phoneno.validator';
 import { UserValidator } from './address/username.validator';
 import { PincodeValidator } from './address/pincode.validator';
+import { OrderComponent } from './order/order.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -36,7 +37,8 @@ import { PincodeValidator } from './address/pincode.validator';
     CartComponent,
     PhoneValidator,
     UserValidator,
-    PincodeValidator
+    PincodeValidator,
+    OrderComponent
   ],
   imports: [
     BrowserModule,

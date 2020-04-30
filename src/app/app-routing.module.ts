@@ -8,6 +8,7 @@ import { UpdateProfileComponent } from './update-profile/update-profile.componen
 import { ViewProductComponent } from './view-product/view-product.component';
 import { CartComponent } from './cart/cart.component';
 import { AddressComponent } from './address/address.component';
+import { OrderComponent } from './order/order.component';
 
 
 const routes: Routes = [
@@ -19,6 +20,7 @@ const routes: Routes = [
   {path:"viewProduct/:id",component:ViewProductComponent},
   {path:"viewCart",component:CartComponent},
   {path:"address",component:AddressComponent},
+  {path:"viewOrders",component:OrderComponent},
   {path:"",redirectTo:"/welcome",pathMatch:"full"}
 ];
 

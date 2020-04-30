@@ -84,8 +84,9 @@
                     <div class="form-group required">
                         <label class="col-xs-3 col-xs-offset-1 control-label" style="text-align:left">City</label>
                         <div class="col-xs-7">
-                            <input type="text" class="form-control" [(ngModel)]="address.city" name = "city" #city = "ngModel" required>
-                            <p *ngIf="city.dirty&&!city.valid" class="text-danger">This field is required!</p>
+                            <input type="text" class="form-control" [(ngModel)]="address.city" name = "city" #city = "ngModel" required validateUserName> 
+                            <p *ngIf="city.dirty&&city.errors?.required" class="text-danger">This field is required!</p>
+                            <p *ngIf="city.dirty&&city.errors?.userInvalid" class="text-danger">City name can contain only alphabates and spaces.</p>
                         </div>
                     </div>
                     <div class="form-group required">
