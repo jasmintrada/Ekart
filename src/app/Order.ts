@@ -1,4 +1,5 @@
 import { OrderDetails } from './OrderDetails';
+import { Address } from './Address';
 
 export class Order{
     id:number;
@@ -14,4 +15,6 @@ export class Order{
     btnCancel:boolean;
     btnReturn:boolean;
     orderDetails:Array<OrderDetails>;
+    shippingAddress:Address;
+    deliveryCharge:number;
 }

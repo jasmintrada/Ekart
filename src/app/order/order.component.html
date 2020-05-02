@@ -1,1 +1,77 @@
-<p>order works!</p>
+<div class = "col-xs-2"></div>
+
+<div class = "col-xs-8">
+    <h1>Your Orders</h1>
+    <button class = "btn btn-link" value = "All" (click) = 'clickOnCategory($event)'>Orders</button>
+    <button class = "btn btn-link" value = "Open" (click) = 'clickOnCategory($event)'>Open Orders</button>
+    <button class = "btn btn-link" value = "Delivered" (click) = 'clickOnCategory($event)'>Delivered Orders</button>
+    <button class = "btn btn-link" value = "Cancelled" (click) = 'clickOnCategory($event)'>Cancelled Orders</button>
+    <button class = "btn btn-link" value = "Returned" (click) = 'clickOnCategory($event)'>Returned Orders</button>
+    <hr>
+    <div *ngFor="let order of orders | orderCategory : category">
+        <span  class = "thumbnail">
+        <div class = "thumbnail-head">
+            <table class = "table text-center">
+                <thead>
+                    <th class="text-center">Order Placed</th>
+                    <th class="text-center">Total Amount</th>
+                    <th class="text-center">Ship To</th>
+                    <th class="text-center">Order # {{order.id}}</th>
+                </thead>
+                <tr>
+                    <td>{{order.orderedDate | date}}</td>
+                    <td>{{order.total| currency:'INR':'symbol':'1.2-2'}}</td>
+                    <td><button class = "btn-link tip">
+                        {{order.shippingAddress.userName}}
+                            <span>
+                                <p class = "address"><strong>{{order.shippingAddress.userName}}</strong><br>
+                                    {{order.shippingAddress.addressLine1}}
+                                    {{order.shippingAddress.addressLine2?' '+order.shippingAddress.addressLine2:''}}<br>
+                                    {{order.shippingAddress.locality}}<br>
+                                    {{order.shippingAddress.city}}, {{order.shippingAddress.state}} {{order.shippingAddress.pincode}}<br>
+                                    {{order.shippingAddress.country}}<br>
+                                    Phone number: {{order.shippingAddress.phoneNo}}</p>
+                            </span>
+                        </button>
+                    </td>
+                    <td><button class = "btn-link">Order Details</button></td>
+                </tr>
+            </table>
+        </div>
+        <hr>
+        <div class = "row">
+            <div class = "col-xs-9">
+                <div *ngIf = "order.deliveryDate" style="padding-left: 15px;">
+                    <h4><b> Delivered {{order.deliveryDate | date}}</b></h4>
+                    <h6>Delivery Charge : {{order.deliveryCharge | currency:'INR':'symbol':'1.2-2'}}</h6>
+                </div>
+                <div *ngIf = "order.returnDate" style="padding-left: 15px;">
+                    <h4><b> Returned {{order.returnDate | date}}</b></h4>
+                </div>
+                <div *ngIf = "order.cancelledDate" style="padding-left: 15px;">
+                    <h4><b> Cancelled {{order.cancelledDate | date}}</b></h4>
+                </div>
+                <div *ngFor="let detail of order.orderDetails">
+                        <div class = "col-xs-3" [style.cursor]="'pointer'" (click)="viewProduct(detail.product.id)">
+                            <img src ='{{"assets/images/"+detail.product.category+".jpg"}}' [title]='detail.product.displayName'
+                                            [style.width.px]='imageWidth' [style.height.px]='imageHeight' [style.margin.px]='imageMargin'>
+                        </div>
+                        <div class="col-xs-8" style = "margin-top: 45px;">
+                                <a [routerLink]="['/viewProduct',detail.product.id]" >
+                                    {{detail.product.displayName}} </a>
+                                <h6 class = "text-danger">{{(detail.price/detail.quantity) | currency:'INR':'symbol':'1.2-2'}}</h6>
+                        </div>
+                </div>
+            </div>
+            <div class = "col-xs-3" style = "margin-top: 20px;">
+                <button class = "btn-grey" *ngIf = "order.btnReviewProduct">Write Product Review</button>
+                <button class = "btn-grey" *ngIf = "order.btnReviewSeller">Write Seller Review</button>
+                <button class = "btn-grey" *ngIf = "order.btnReturn">Return items</button>
+                <button class = "btn-grey" *ngIf = "order.btnCancel">Cancel Order</button>
+            </div>
+        </div>
+        </span>
+    </div>
+    
+</div>
+<div class = "col-xs-2"></div>

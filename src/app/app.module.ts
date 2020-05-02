@@ -22,6 +22,7 @@ import { PhoneValidator } from './address/phoneno.validator';
 import { UserValidator } from './address/username.validator';
 import { PincodeValidator } from './address/pincode.validator';
 import { OrderComponent } from './order/order.component';
+import { OrderCategoryPipe } from './order-category.pipe';
 @NgModule({
   declarations: [
     AppComponent,
@@ -38,7 +39,8 @@ import { OrderComponent } from './order/order.component';
     PhoneValidator,
     UserValidator,
     PincodeValidator,
-    OrderComponent
+    OrderComponent,
+    OrderCategoryPipe
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,47 @@
+.thumbnail-head{
+    background-color: rgb(240, 240, 240);
+    border-radius: 5px;
+    height: 60px;
+    padding: 10px;
+}
+hr{
+    margin: 5px;
+}
+.btn-grey{
+    background-color: rgb(240, 240, 240);
+    border-radius: 5px;
+    border-color:  rgb(200, 200, 200);
+    padding: 5px;
+    margin: 5px;
+    width: 200px;
+    font-size: small;
+}
+.btn-grey:hover{
+    background-color: rgb(220, 220, 220);
+}
+button.tip:hover {
+    position: relative
+}
+button.tip span {
+    display: none
+}
+button.tip:hover span {
+    border: #c0c0c0 1px;
+    padding: 5px 20px 5px 5px;
+    display: block;
+    left: 0px;
+    background: #ffffff no-repeat 100% 5%;
+    margin: 10px;
+    width: 250px;
+    position: absolute;
+    top: 10px;
+    text-decoration: none;
+    text-align: left;
+    color: black;
+}
+.buttonSelected{
+    border: none;
+    outline: none;
+    border-bottom: solid orange 2px;
+    color: black;
+}
